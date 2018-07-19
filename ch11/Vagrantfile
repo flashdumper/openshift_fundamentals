@@ -1,0 +1,42 @@
+$lab_script = <<SCRIPT
+cat <<EOF >> /etc/hosts
+172.24.0.11 openshift-master.example.com openshift-master
+172.24.0.12 openshift-node-1.example.com openshift-node-1
+172.24.0.13 openshift-node-2.example.com openshift-node-2
+EOF
+SCRIPT
+
+Vagrant.configure(2) do |config|
+  config.vm.define "openshift-master" do |conf|
+    conf.vm.box = "centos/7"
+    conf.vm.hostname = 'openshift-master.example.com'
+    conf.vm.network "private_network", ip: "172.24.0.11"
+    conf.vm.provider "virtualbox" do |v|
+       v.memory = 4096
+       v.cpus = 2
+    end
+    conf.vm.provision "shell", inline: $lab_script
+  end
+
+  config.vm.define "openshift-node-1" do |conf|
+    conf.vm.box = "centos/7"
+    conf.vm.hostname = 'openshift-node-1.example.com'
+    conf.vm.network "private_network", ip: "172.24.0.12"
+    conf.vm.provider "virtualbox" do |v|
+       v.memory = 2048
+       v.cpus = 2
+    end
+    conf.vm.provision "shell", inline: $lab_script
+  end
+
+  config.vm.define "openshift-node-2" do |conf|
+    conf.vm.box = "centos/7"
+    conf.vm.hostname = 'openshift-node-2.example.com'
+    conf.vm.network "private_network", ip: "172.24.0.13"
+    conf.vm.provider "virtualbox" do |v|
+       v.memory = 2048
+       v.cpus = 2
+    end
+    conf.vm.provision "shell", inline: $lab_script
+  end
+end
