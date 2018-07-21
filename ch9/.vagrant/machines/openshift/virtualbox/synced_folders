@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/Users/dzuev/Dropbox/Books/Packt Publishing/openshift_fundamentals/ch9","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
